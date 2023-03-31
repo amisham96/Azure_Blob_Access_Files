@@ -1,0 +1,27 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.6'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.myapp'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.azure:azure-storage-blob:12.16.0'
+	implementation group: 'com.azure', name: 'azure-storage-blob', version: '12.16.0'
+	implementation group: 'com.microsoft.azure', name: 'azure-storage-spring-boot-starter', version: '2.2.5'
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
