@@ -83,24 +83,24 @@ public class AzureBlobController {
 		// Code To download the File From Blob Storage
 	}
 
-//	@GetMapping("/call")
-//	public void assignBlob() throws IOException {
-//
-//		TokenCredential credential = new ClientSecretCredentialBuilder()
-//				.clientId("<client_id>")
-//				.clientSecret("<client_secret>")
-//				.tenantId("<tenant_id>").build();
-//		String connectionString = "DefaultEndpointsProtocol=https;AccountName=<storage_account_name>;AccountKey=<storage_account_key>;EndpointSuffix=core.windows.net";
-//		BlobContainerClient containerClient = new BlobContainerClientBuilder().credential(credential)
-//				.connectionString(connectionString).containerName("<container_name>").buildClient();
-//
-//		BlobSignedIdentifier identifier = new BlobSignedIdentifier().setId("9133a7d4-a185-4d45-9733-ab161cf75a88")
-//				.setAccessPolicy(new BlobAccessPolicy().setStartsOn(OffsetDateTime.now())
-//						.setExpiresOn(OffsetDateTime.now().plusDays(7)).setPermissions("rw"));
-//
-//		// Set the access policy for the container
-//		containerClient.setAccessPolicy(null, Collections.singletonList(identifier));
-//
-//	}
+	@GetMapping("/call")
+	public void assignBlob() throws IOException {
+
+		TokenCredential credential = new ClientSecretCredentialBuilder()
+				.clientId("<client_id>")
+				.clientSecret("<client_secret>")
+				.tenantId("<tenant_id>").build();
+		String connectionString = "DefaultEndpointsProtocol=https;AccountName=<storage_account_name>;AccountKey=<storage_account_key>;EndpointSuffix=core.windows.net";
+		BlobContainerClient containerClient = new BlobContainerClientBuilder().credential(credential)
+				.connectionString(connectionString).containerName("<container_name>").buildClient();
+
+		BlobSignedIdentifier identifier = new BlobSignedIdentifier().setId("9133a7d4-a185-4d45-9733-ab161cf75a88")
+				.setAccessPolicy(new BlobAccessPolicy().setStartsOn(OffsetDateTime.now())
+						.setExpiresOn(OffsetDateTime.now().plusDays(7)).setPermissions("rw"));
+
+		// Set the access policy for the container
+		containerClient.setAccessPolicy(null, Collections.singletonList(identifier));
+
+	}
 
 }
