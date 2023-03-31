@@ -33,56 +33,6 @@ import com.azure.storage.blob.sas.BlobServiceSasSignatureValues;
 @RestController
 public class AzureBlobController {
 
-	@PostMapping("/upload")
-	public void uploadFile(@RequestParam(value = "file") MultipartFile file) throws IOException {
-
-		// Code To Create and File In Blob Storage
-		String str = "DefaultEndpointsProtocol=https;AccountName=<storage_account_name>;AccountKey=<storage_account_key>;EndpointSuffix=core.windows.net";
-
-		OffsetDateTime expiryTime = OffsetDateTime.now().plusDays(1);
-		BlobSasPermission permission = new BlobSasPermission().setReadPermission(true);
-		BlobServiceSasSignatureValues values = new BlobServiceSasSignatureValues(expiryTime, permission)
-				.setStartTime(OffsetDateTime.now());
-		BlobContainerClient container = new BlobContainerClientBuilder().connectionString(str)
-				.containerName("<conatiner_name>").buildClient();
-
-		BlobClient blob = container.getBlobClient(file.getOriginalFilename());
-		blob.upload(file.getInputStream(), file.getSize(), true);
-		String sasToken = blob.generateSas(values);
-		// Code To Create and File In Blob Storage
-
-		// Code To download the File From Blob Storage
-		URL url = new URL(blob.getBlobUrl() + "?" + sasToken);
-
-		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-		int responseCode = httpConn.getResponseCode();
-
-		// Check if the response code is HTTP_OK (200)
-		if (responseCode == HttpURLConnection.HTTP_OK) {
-			// Open input stream from the HTTP connection
-			InputStream inputStream = httpConn.getInputStream();
-
-			// Open output stream to save the file
-			FileOutputStream outputStream = new FileOutputStream("<path_to_download>");
-
-			// Read bytes from input stream and write to output stream
-			int bytesRead;
-			byte[] buffer = new byte[4096];
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				outputStream.write(buffer, 0, bytesRead);
-			}
-
-			// Close streams
-			outputStream.close();
-			inputStream.close();
-			System.out.println("File downloaded");
-		} else {
-			System.out.println("Failed to download file: " + httpConn.getResponseMessage());
-		}
-		httpConn.disconnect();
-		// Code To download the File From Blob Storage
-	}
-
 	@GetMapping("/call")
 	public void assignBlob() throws IOException {
 
